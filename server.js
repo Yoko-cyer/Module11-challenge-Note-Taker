@@ -7,9 +7,13 @@ const PORT = process.env.PORT || 3001;
 
 const app = express();
 
-// static middleware
+// static middleware - serving the folder statically 
 app.use(express.static('public'));
+
+// teach express on how to understand incoming json req body
 app.use(express.json());
+
+// teach express on how to understand incoming form data req body
 app.use(express.urlencoded({extended: true}));
 
 // load the routes
@@ -24,3 +28,4 @@ app.get("*", (req, res) => {
 app.listen(PORT, () => {
   console.log(`app is running on http://localhost:${PORT}`);
 })
+

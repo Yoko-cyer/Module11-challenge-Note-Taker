@@ -32,7 +32,13 @@ function saveNote(title, text){
 }
 
 function deleteNote(id){
-  
+  // get the notes
+  const notes = getNotes();
+
+  // filter out the note with the given id
+  const filtered = notes.filter((note) => note.id !== id);
+  // resave 
+  fs.writeFileSync(dbPath, JSON.stringify(filtered), 'utf-8');
 }
 
 // GET /api/notes should read the db.json file and return all saved notes as JSON.
@@ -49,10 +55,18 @@ router.post('/notes', (req, res) => {
 })
 
 // delete
-router.delete('/api/note/:id', (req, res) => {
+router.delete('/notes/:id', (req, res) => {
+
+  deleteNote(req.params.id);
+
+  res.json({
+    data: 'ok',
+  })
 
 })
 
 
 
 module.exports = router;
+
+
